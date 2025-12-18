@@ -23,23 +23,47 @@ pip install -r requirements.txt
 
 ## Użycie
 
-### Trening pojedynczego modelu
+### 1. Pobieranie danych
 
-**Automatyczny wybór urządzenia (GPU jeśli dostępne, w przeciwnym razie CPU):**
+Dane są pobierane automatycznie przy pierwszym uruchomieniu treningu. Możesz je też pobrać ręcznie:
+
+```bash
+python data/download_data.py
+```
+
+### 2. Trening pojedynczego modelu
+
+Możesz trenować model z różnymi konfiguracjami zdefiniowanymi w `config.py`.
+
+**Przykład:**
 ```bash
 python train.py --config baseline
 ```
 
-**Wymuszenie użycia CPU:**
+**Dostępne parametry:**
+- `--config`: Wybór konfiguracji (`baseline`, `more_filters`, `less_dropout`, `large_batch`, `high_lr`)
+- `--epochs`: Nadpisanie liczby epok
+- `--device`: Wybór urządzenia (`cpu` lub `cuda`)
+
+### 3. Ewaluacja modelu
+
+Aby sprawdzić model na zbiorze testowym i wygenerować raporty:
+
 ```bash
-python train.py --config baseline --device cpu
+python evaluate.py --model results/baseline_best_model.pth --name baseline
 ```
 
-**Wymuszenie użycia GPU (CUDA):**
+### 4. Uruchamianie serii eksperymentów
+
+Aby automatycznie uruchomić wszystkie (lub wybrane) eksperymenty po kolei:
+
 ```bash
-python train.py --config baseline --device cuda
+# Wszystkie eksperymenty
+python experiments.py
+
+# Tylko wybrane
+python experiments.py --experiments baseline more_filters
 ```
- 0.25 |
 
 ## Struktura projektu
 
