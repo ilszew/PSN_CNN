@@ -1,0 +1,12 @@
+results/
+__pycache__/
+.venv/
+.cursor/
+*.pth
+*.png
+*.json
+*.txt
+*.csv
+!requirements.txt
+!README.md
+

@@ -15,13 +15,14 @@ from evaluate import evaluate_model
 from utils.visualization import plot_experiments_comparison
 
 
-def run_all_experiments(experiments=None, skip_existing=False):
+def run_all_experiments(experiments=None, skip_existing=False, device=None):
     """
     Uruchamia wszystkie zdefiniowane eksperymenty.
     
     Args:
         experiments: Lista nazw eksperymentów do uruchomienia (None = wszystkie)
         skip_existing: Czy pominąć eksperymenty z istniejącymi wynikami
+        device: Urządzenie do obliczeń ('cpu', 'cuda' lub None dla automatycznego wyboru)
         
     Returns:
         pd.DataFrame: Wyniki wszystkich eksperymentów
@@ -63,14 +64,16 @@ def run_all_experiments(experiments=None, skip_existing=False):
         model, history, best_val_acc = train_model(
             config,
             experiment_name=exp_name,
-            save_model=True
+            save_model=True,
+            device=device
         )
         
         # Ewaluuj na zbiorze testowym
         test_acc, test_loss = evaluate_model(
             model_path=model_path,
             experiment_name=exp_name,
-            generate_plots=True
+            generate_plots=True,
+            device=device
         )
         
         # Zapisz wyniki eksperymentu
@@ -136,12 +139,15 @@ def main():
                         help='Lista eksperymentów do uruchomienia (domyślnie wszystkie)')
     parser.add_argument('--skip-existing', action='store_true',
                         help='Pomiń eksperymenty z istniejącymi wynikami')
+    parser.add_argument('--device', type=str, default=None, choices=['cpu', 'cuda'],
+                        help='Urządzenie do obliczeń (cpu/cuda, domyślnie auto)')
     
     args = parser.parse_args()
     
     run_all_experiments(
         experiments=args.experiments,
-        skip_existing=args.skip_existing
+        skip_existing=args.skip_existing,
+        device=args.device
     )
 
 

@@ -78,7 +78,7 @@ def validate(model, val_loader, criterion, device):
     return epoch_loss, epoch_acc
 
 
-def train_model(config, experiment_name='model', save_model=True):
+def train_model(config, experiment_name='model', save_model=True, device=None):
     """
     Trenuje model CNN według podanej konfiguracji.
     
@@ -86,6 +86,7 @@ def train_model(config, experiment_name='model', save_model=True):
         config: Słownik z konfiguracją
         experiment_name: Nazwa eksperymentu
         save_model: Czy zapisać model
+        device: Urządzenie do obliczeń ('cpu', 'cuda' lub None dla automatycznego wyboru)
         
     Returns:
         tuple: (model, history, best_val_acc)
@@ -94,7 +95,10 @@ def train_model(config, experiment_name='model', save_model=True):
     os.makedirs(RESULTS_DIR, exist_ok=True)
     
     # Ustawienia urządzenia
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    if device is None:
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    else:
+        device = torch.device(device)
     print(f"\nUrządzenie: {device}")
     
     # Wczytaj dane
@@ -196,6 +200,8 @@ def main():
                         help='Nadpisz learning rate')
     parser.add_argument('--no-save', action='store_true',
                         help='Nie zapisuj modelu')
+    parser.add_argument('--device', type=str, default=None, choices=['cpu', 'cuda'],
+                        help='Urządzenie do obliczeń (cpu/cuda, domyślnie auto)')
     
     args = parser.parse_args()
     
@@ -217,7 +223,8 @@ def main():
     model, history, best_acc = train_model(
         config, 
         experiment_name=args.config,
-        save_model=not args.no_save
+        save_model=not args.no_save,
+        device=args.device
     )
     
     print(f"\n{'='*60}")

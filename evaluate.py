@@ -87,7 +87,7 @@ def evaluate_on_test(model, test_loader, device):
     return accuracy, avg_loss, y_true, y_pred
 
 
-def evaluate_model(model_path, experiment_name='model', generate_plots=True):
+def evaluate_model(model_path, experiment_name='model', generate_plots=True, device=None):
     """
     Pełna ewaluacja modelu z generowaniem raportów i wizualizacji.
     
@@ -95,13 +95,17 @@ def evaluate_model(model_path, experiment_name='model', generate_plots=True):
         model_path: Ścieżka do pliku modelu
         experiment_name: Nazwa eksperymentu
         generate_plots: Czy generować wykresy
+        device: Urządzenie do obliczeń ('cpu', 'cuda' lub None dla automatycznego wyboru)
         
     Returns:
         tuple: (accuracy, loss)
     """
     os.makedirs(RESULTS_DIR, exist_ok=True)
     
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    if device is None:
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    else:
+        device = torch.device(device)
     print(f"\nUrządzenie: {device}")
     
     # Wczytaj model
@@ -212,6 +216,8 @@ def main():
                         help='Nazwa eksperymentu dla plików wyjściowych')
     parser.add_argument('--no-plots', action='store_true',
                         help='Nie generuj wizualizacji')
+    parser.add_argument('--device', type=str, default=None, choices=['cpu', 'cuda'],
+                        help='Urządzenie do obliczeń (cpu/cuda, domyślnie auto)')
     
     args = parser.parse_args()
     
@@ -222,7 +228,8 @@ def main():
     evaluate_model(
         model_path=args.model,
         experiment_name=args.name,
-        generate_plots=not args.no_plots
+        generate_plots=not args.no_plots,
+        device=args.device
     )
 
 
