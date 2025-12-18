@@ -21,16 +21,6 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## Użycie
-
-### 1. Pobieranie danych
-
-Dane są pobierane automatycznie przy pierwszym uruchomieniu treningu. Możesz je też pobrać ręcznie:
-
-```bash
-python data/download_data.py
-```
-
 ### 2. Trening pojedynczego modelu
 
 Możesz trenować model z różnymi konfiguracjami zdefiniowanymi w `config.py`.
@@ -57,11 +47,23 @@ python evaluate.py --model results/baseline_best_model.pth --name baseline
 
 Aby automatycznie uruchomić wszystkie (lub wybrane) eksperymenty po kolei:
 
+**Automatyczny wybór (CUDA jeśli dostępna):**
 ```bash
-# Wszystkie eksperymenty
 python experiments.py
+```
 
-# Tylko wybrane
+**Wymuszenie użycia CPU:**
+```bash
+python experiments.py --device cpu
+```
+
+**Wymuszenie użycia GPU (CUDA):**
+```bash
+python experiments.py --device cuda
+```
+
+**Tylko wybrane eksperymenty:**
+```bash
 python experiments.py --experiments baseline more_filters
 ```
 
