@@ -21,33 +21,9 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 2. Trening pojedynczego modelu
+## 2. Uruchamianie serii eksperymentów
 
-Możesz trenować model z różnymi konfiguracjami zdefiniowanymi w `config.py`.
-
-**Przykład:**
-```bash
-python train.py --config baseline
-```
-
-**Dostępne parametry:**
-- `--config`: Wybór konfiguracji (`baseline`, `more_filters`, `less_dropout`, `large_batch`, `high_lr`)
-- `--epochs`: Nadpisanie liczby epok
-- `--device`: Wybór urządzenia (`cpu` lub `cuda`)
-
-### 3. Ewaluacja modelu
-
-Aby sprawdzić model na zbiorze testowym i wygenerować raporty:
-
-```bash
-python evaluate.py --model results/baseline_best_model.pth --name baseline
-```
-
-### 4. Uruchamianie serii eksperymentów
-
-Aby automatycznie uruchomić wszystkie (lub wybrane) eksperymenty po kolei:
-
-**Automatyczny wybór (CUDA jeśli dostępna):**
+**Automatyczny wybór:**
 ```bash
 python experiments.py
 ```
@@ -60,11 +36,6 @@ python experiments.py --device cpu
 **Wymuszenie użycia GPU (CUDA):**
 ```bash
 python experiments.py --device cuda
-```
-
-**Tylko wybrane eksperymenty:**
-```bash
-python experiments.py --experiments baseline more_filters
 ```
 
 ## Struktura projektu
@@ -98,8 +69,6 @@ Wyniki eksperymentów są zapisywane w katalogu `results/`:
 
 ## Błąd "BadGzipFile"
 
-
-**Windows:**
 ```powershell
 Remove-Item -Recurse -Force data\fashionmnist
 python train.py --config baseline
@@ -107,21 +76,12 @@ python train.py --config baseline
 
 ## Brak GPU / CUDA nie działa
 
-1. Sprawdź czy CUDA jest zainstalowana:
 ```bash
 python -c "import torch; print(torch.cuda.is_available())"
 ```
 
-2. Jeśli zwraca `False`, użyj CPU:
-```bash
-python train.py --config baseline --device cpu
-```
-
 ## Błąd "pip not recognized"
 
-Upewnij się, że środowisko wirtualne jest aktywowane:
-
-**Windows:**
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
