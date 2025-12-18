@@ -1,0 +1,24 @@
+{
+  "experiment_name": "baseline",
+  "config": {
+    "learning_rate": 0.001,
+    "batch_size": 64,
+    "epochs": 20,
+    "filters": [
+      32,
+      64,
+      128
+    ],
+    "dropout": 0.5,
+    "kernel_size": 3,
+    "hidden_size": 256,
+    "early_stopping_patience": 5
+  },
+  "best_val_accuracy": 93.10137972405519,
+  "test_accuracy": 92.14,
+  "test_loss": 0.24081523349285125,
+  "final_train_loss": 0.0736361899036303,
+  "final_train_acc": 97.27589103564142,
+  "epochs_trained": 13,
+  "timestamp": "2025-12-18T11:14:19.183228"
+}

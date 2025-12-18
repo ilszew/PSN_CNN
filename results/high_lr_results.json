@@ -1,0 +1,24 @@
+{
+  "experiment_name": "high_lr",
+  "config": {
+    "learning_rate": 0.01,
+    "batch_size": 64,
+    "epochs": 20,
+    "filters": [
+      32,
+      64,
+      128
+    ],
+    "dropout": 0.5,
+    "kernel_size": 3,
+    "hidden_size": 256,
+    "early_stopping_patience": 5
+  },
+  "best_val_accuracy": 91.83163367326534,
+  "test_accuracy": 91.34,
+  "test_loss": 0.33165498600006105,
+  "final_train_loss": 0.197539847352058,
+  "final_train_acc": 92.83371334853395,
+  "epochs_trained": 20,
+  "timestamp": "2025-12-18T11:23:51.050154"
+}

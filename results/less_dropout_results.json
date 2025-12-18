@@ -1,0 +1,24 @@
+{
+  "experiment_name": "less_dropout",
+  "config": {
+    "learning_rate": 0.001,
+    "batch_size": 64,
+    "epochs": 20,
+    "filters": [
+      32,
+      64,
+      128
+    ],
+    "dropout": 0.25,
+    "kernel_size": 3,
+    "hidden_size": 256,
+    "early_stopping_patience": 5
+  },
+  "best_val_accuracy": 93.12137572485503,
+  "test_accuracy": 92.78,
+  "test_loss": 0.3188254016280174,
+  "final_train_loss": 0.035506950597163245,
+  "final_train_acc": 98.71594863794552,
+  "epochs_trained": 17,
+  "timestamp": "2025-12-18T11:49:02.663262"
+}
